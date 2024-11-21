@@ -25,7 +25,9 @@ class ChatWindow:
             return url_class(token.address, token.name).hlink_name
 
         balances = [
-            f"{format_token_name(token)}: {hcode(amount_str(balance))}"
+            f"🖼 {format_token_name(token)}: {hcode(amount_str(balance))}"
+            if token.type == TokenDB.Type.NFTCollection else
+            f"🪙 {format_token_name(token)}: {hcode(amount_str(balance))}"
             for token in tokens
             if (balance := token.holders.get(userfriendly_to_raw(user.wallet_address), 0)) > 0
         ]

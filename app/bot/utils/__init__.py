@@ -38,4 +38,4 @@ def amount_str(amount) -> str:
     from decimal import Decimal
 
     amount = Decimal(str(amount))
-    return "{:,.15f}".format(amount).rstrip('0').rstrip('.')
+    return "{:,.2f}".format(amount).rstrip('0').rstrip('.')

@@ -82,7 +82,14 @@ def select_tokens(tokens: Sequence[TokenDB]) -> Markup:
     builder = Builder()
     builder.row(
         *[
-            Button(text=token.name, callback_data=f"{token.id}:{1}")
+            Button(
+                text=(
+                    f"🖼 {token.name}"
+                    if token.type == TokenDB.Type.NFTCollection else
+                    f"🪙 {token.name}"
+                ),
+                callback_data=f"{token.id}:{1}"
+            )
             for token in tokens
         ], width=1,
     )
