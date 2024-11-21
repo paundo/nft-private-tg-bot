@@ -1,4 +1,4 @@
-# 🤖 TON Token Access Control Bot
+# 🤖 BOLGUR Token Access Control Bot
 
 [![TON](https://img.shields.io/badge/TON-grey?logo=TON&logoColor=40AEF0)](https://ton.org)
 [![Telegram Bot](https://img.shields.io/badge/Bot-grey?logo=telegram)](https://core.telegram.org/bots)
