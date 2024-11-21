@@ -20,14 +20,14 @@ class MemberDB(AbstractModel):
             "users.id",
             ondelete="CASCADE",
         ),
-        nullable=False,
+        nullable=True,
     )
     chat_id = Column(
         ForeignKey(
             "chats.id",
             ondelete="CASCADE",
         ),
-        nullable=False,
+        nullable=True,
     )
     created_at = Column(
         DateTime,
