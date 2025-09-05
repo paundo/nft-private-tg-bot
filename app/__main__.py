@@ -71,17 +71,32 @@ async def on_shutdown(
         scheduler: Scheduler,
         engine: AsyncEngine,
         sessionmaker: async_sessionmaker,
+        tonapi: AsyncTonapi,
 ) -> None:
     """
     Shutdown event handler. This runs when the bot shuts down.
     """
     admins_ids = await AdminDB.get_all_ids(sessionmaker, config)
 
+    # Delete bot commands
     await bot_commands_delete(bot)
     await bot_admin_commands_delete(bot, admins_ids)
+
+    # Delete webhook
     await bot.delete_webhook()
-    await bot.session.close()
+
+    # Close bot session
+    if bot.session:
+        await bot.session.close()
+
+    # Close tonapi session
+    if tonapi.session:
+        await tonapi.session.close()
+
+    # Dispose database engine
     await engine.dispose()
+
+    # Shutdown scheduler
     scheduler.shutdown()
 
 
@@ -93,12 +108,14 @@ async def main() -> None:
 
     scheduler = Scheduler(config=config)
 
+    # Initialize AsyncTonapi
     tonapi = AsyncTonapi(
         config.tonapi.KEY,
         is_testnet=config.IS_TESTNET,
         max_retries=5,
     )
 
+    # Setup database
     engine = create_async_engine(
         config.database.dsn(),
         pool_pre_ping=True,
@@ -108,15 +125,21 @@ async def main() -> None:
         class_=AsyncSession,
         expire_on_commit=False
     )
+
+    # Setup Redis storage
     storage = RedisStorage.from_url(
         url=config.redis.dsn(),
     )
+
+    # Initialize Bot
     bot = Bot(
         token=config.bot.TOKEN,
         default=DefaultBotProperties(
             parse_mode=ParseMode.HTML,
         ),
     )
+
+    # Setup Dispatcher
     dp = Dispatcher(
         bot=bot,
         storage=storage,
@@ -128,13 +151,14 @@ async def main() -> None:
         tonapi=tonapi,
     )
 
-    # Register startup handler
+    # Register startup/shutdown handlers
     dp.startup.register(on_startup)
-    # Register shutdown handler
     dp.shutdown.register(on_shutdown)
 
-    # Start the bot
+    # Ensure clean webhook deletion before polling
     await bot.delete_webhook()
+
+    # Start polling
     await dp.start_polling(bot, allowed_updates=dp.resolve_used_update_types())
 
 
