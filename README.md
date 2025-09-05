@@ -1,4 +1,4 @@
-# 🤖 BOLGUR Token Access Control Bot
+# 🤖 PAUNDO Token Access Control Bot
 
 [![TON](https://img.shields.io/badge/TON-grey?logo=TON&logoColor=40AEF0)](https://ton.org)
 [![Telegram Bot](https://img.shields.io/badge/Bot-grey?logo=telegram)](https://core.telegram.org/bots)
@@ -12,7 +12,7 @@ private
 Telegram chats. This convenient solution allows you to control who has access to your groups and when, using tokens as
 unique non-transferable identifiers for each participant.
 
-* Bot example: [@TONTokenAccessControlBot](https://t.me/TONTokenAccessControlBot)
+* Bot example: [@TONTokenAccessControlBot](https://t.me/PaundoAcessControlNFT)
 
 ## Features
 
