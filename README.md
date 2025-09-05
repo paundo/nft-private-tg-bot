@@ -12,7 +12,7 @@ private
 Telegram chats. This convenient solution allows you to control who has access to your groups and when, using tokens as
 unique non-transferable identifiers for each participant.
 
-* Bot example: [@TONTokenAccessControlBot](https://t.me/PaundoAcessControlNFT)
+* Bot example: [@TONTokenAccessControlBot](https://t.me/paundo_accessc_nft_bot)
 
 ## Features
 
